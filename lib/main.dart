@@ -58,10 +58,14 @@ class TabsPageState extends State<TabsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Flutter App'),
+        title: Image.asset('images/logo.png'),
+        actions: [
+          Icon(Icons.notifications),
+        ],
       ),
       body: DefaultTabController(
         length: 4,
+        initialIndex: 1,
         child: Scaffold(
           body: TabBarView(
             children: [MainPage(), MainPage(), MainPage(), MainPage()],

@@ -3,24 +3,24 @@ import 'dart:ui';
 class Styles {}
 
 class FontColors {
-  static final gray = "#B6BFC2".toColor();
-  static final darkBlue = "#0D2834".toColor();
-  static final gold = "#C8A574".toColor();
-  static final white = "#FFFFFF".toColor();
+  static final Color gray = "#B6BFC2".toColor();
+  static final Color darkBlue = "#0D2834".toColor();
+  static final Color gold = "#C8A574".toColor();
+  static final Color white = "#FFFFFF".toColor();
 }
 
 class SurfaceColors {
-  static final lightGray = "#E8ECEE".toColor();
-  static final mediumGray = "#B6BFC2".toColor();
-  static final darkBlue = "#0D2834".toColor();
-  static final gold = "#C8A574".toColor();
-  static final white = "#FFFFFF".toColor();
+  static final Color lightGray = "#E8ECEE".toColor();
+  static final Color mediumGray = "#B6BFC2".toColor();
+  static final Color darkBlue = "#0D2834".toColor();
+  static final Color gold = "#C8A574".toColor();
+  static final Color white = "#FFFFFF".toColor();
 }
 
 class NotificationColors {
-  static final error = "#EB5757".toColor();
-  static final danger = "#FFAB00".toColor();
-  static final success = "#21CA7C".toColor();
+  static final Color error = "#EB5757".toColor();
+  static final Color danger = "#FFAB00".toColor();
+  static final Color success = "#21CA7C".toColor();
 }
 
 extension ColorExtension on String {
