@@ -10,12 +10,17 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   String _selectedItem1;
+  String _selectedItem2;
+  String _selectedItem3;
+
   List<String> _dataForDropDown = [
     'All areas',
     'Some data',
     'Another text',
     'Fourth item'
   ];
+
+  bool _isHolderVisible = true;
   RangeValues _currentRangeValues = const RangeValues(0, 100);
 
   TextEditingController lowerPercentageController = TextEditingController();
@@ -59,7 +64,8 @@ class _MainPageState extends State<MainPage> {
                       decoration: InputDecoration(
                         labelText: "Search for cases",
                         hintText: "Search for cases",
-                        //  errorText:true ? 'Search query must be from 3 to 120 symbols' : null,
+                        filled: true,
+                        fillColor: Colors.white,
                         suffixIcon: Icon(
                           Icons.search,
                           color: SurfaceColors.gold,
@@ -72,9 +78,9 @@ class _MainPageState extends State<MainPage> {
                       ),
                     ),
                     _header('Filters'),
-                    _dropDownList('Area of practices'),
-                    _dropDownList('Type of cases'),
-                    _dropDownList('State'),
+                    _dropDownList('Area of practices', 0),
+                    _dropDownList('Type of cases', 1),
+                    _dropDownList('State', 2),
                     Divider(
                       color: SurfaceColors.darkBlue,
                     ),
@@ -99,6 +105,8 @@ class _MainPageState extends State<MainPage> {
                             },
                             decoration: InputDecoration(
                               suffixText: '%',
+                              filled: true,
+                              fillColor: Colors.white,
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(5.0),
@@ -134,6 +142,8 @@ class _MainPageState extends State<MainPage> {
                               });
                             },
                             decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white,
                               suffixText: '%',
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.all(
@@ -169,16 +179,17 @@ class _MainPageState extends State<MainPage> {
                       width: double.infinity,
                       child: RaisedButton(
                         color: SurfaceColors.darkBlue,
-                        onPressed: null,
+                        onPressed: (() {
+                          setState(() {
+                            _isHolderVisible = false;
+                          });
+                        }),
+                        padding: const EdgeInsets.all(15.0),
                         shape: RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(5.0)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Text(
-                            "Asdasd",
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 16.0),
-                          ),
+                        child: Text(
+                          "Apply filter",
+                          style: TextStyle(color: Colors.white, fontSize: 16.0),
                         ),
                       ),
                     ),
@@ -186,22 +197,8 @@ class _MainPageState extends State<MainPage> {
                 ),
               ),
             ),
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 60.0),
-                  child: Image.asset('images/holder.png'),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(32.0),
-                  child: Text(
-                    'Create your\nfirst case',
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headline2,
-                  ),
-                ),
-              ],
-            ),
+            emptyView(),
+            listViewItem(),
           ],
         ),
       ),
@@ -209,7 +206,202 @@ class _MainPageState extends State<MainPage> {
           elevation: 0.0,
           child: Icon(Icons.add),
           backgroundColor: NotificationColors.success,
-          onPressed: () {}),
+          onPressed: () {
+            setState(() {
+              _isHolderVisible = false;
+            });
+          }),
+    );
+  }
+
+  Widget listViewItem() {
+    return Visibility(
+      visible: !_isHolderVisible,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 24.0, bottom: 12.0),
+              child: Text(
+                'John Smith | Smith Law Firm',
+                style: Theme.of(context).textTheme.headline2,
+              ),
+            ),
+            Row(
+              children: [
+                goldButton('Bidders:', '0'),
+                goldButton('Interviews:', '0'),
+              ],
+            ),
+            Text(
+              'Feugiat, occaecati arcu magna explicabo cons ectetur tempore quos fugiat dolorasperna tur varius, gravida quas, autem consectetur hic  faucibus nesciunt, arcu consectetu raute...',
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
+            Row(
+              children: [
+                goldButton('', 'Auto accidence'),
+                grayButton(Icons.location_on, 'Los Angeles Country, CA')
+              ],
+            ),
+            Row(
+              children: [
+                grayButton(Icons.ac_unit, 'Los Angeles Country, CA'),
+                grayButton(Icons.calendar_today, 'Sep 19, 2019')
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                columnData(
+                    ['Min referal fee', '30%', 'Posted', 'September 19, 2019']),
+                columnData([
+                  'Area of practice',
+                  'Personal Injury',
+                  'Represented',
+                  'Palintiff'
+                ])
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  flex: 10,
+                  child: FlatButton(
+                    onPressed: null,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Edit',
+                        style: Theme.of(context).textTheme.subtitle1,
+                      ),
+                    ),
+                    shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                            color: SurfaceColors.mediumGray,
+                            width: 1,
+                            style: BorderStyle.solid),
+                        borderRadius: BorderRadius.circular(5)),
+                  ),
+                ),
+                Expanded(flex: 1, child: SizedBox()),
+                Expanded(
+                  flex: 10,
+                  child: FlatButton(
+                    onPressed: null,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Delete',
+                        style: Theme.of(context).textTheme.subtitle1,
+                      ),
+                    ),
+                    shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                            color: NotificationColors.error,
+                            width: 1,
+                            style: BorderStyle.solid),
+                        borderRadius: BorderRadius.circular(5)),
+                  ),
+                )
+              ],
+            ),
+            Divider(
+              color: SurfaceColors.darkBlue,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget columnData(List<String> texts) {
+    return Expanded(
+      flex: 1,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: texts.map((e) {
+          if (!texts.indexOf(e).isEven) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Text(
+                e,
+                style: Theme.of(context).textTheme.subtitle1,
+              ),
+            );
+          } else {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Text(e),
+            );
+          }
+        }).toList(),
+      ),
+    );
+  }
+
+  Widget grayButton(IconData image, String value) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 8.0),
+      child: FlatButton.icon(
+        onPressed: null,
+        shape: RoundedRectangleBorder(
+            side: BorderSide(
+                color: SurfaceColors.mediumGray,
+                width: 1,
+                style: BorderStyle.solid),
+            borderRadius: BorderRadius.circular(5)),
+        icon: Icon(image),
+        label: Text(
+          value,
+          style: Theme.of(context).textTheme.caption,
+        ),
+      ),
+    );
+  }
+
+  Widget goldButton(String title, String value) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 8.0),
+      child: FlatButton(
+        onPressed: null,
+        shape: RoundedRectangleBorder(
+            side: BorderSide(
+                color: SurfaceColors.gold, width: 1, style: BorderStyle.solid),
+            borderRadius: BorderRadius.circular(5)),
+        child: Row(
+          children: [
+            Text(title),
+            Text(
+              " " + value,
+              style: Theme.of(context).textTheme.caption,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget emptyView() {
+    return Visibility(
+      visible: _isHolderVisible,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 60.0),
+            child: Image.asset('images/holder.png'),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(32.0),
+            child: Text(
+              'Create your\nfirst case',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.headline2,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -224,27 +416,57 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-  Widget _dropDownList(String hint) {
+  String _chooseSelectedItem(int index) {
+    switch (index) {
+      case 0:
+        return _selectedItem1;
+      case 1:
+        return _selectedItem2;
+      case 2:
+        return _selectedItem3;
+        break;
+      default:
+        return '';
+    }
+  }
+
+  void _changeSelectedItem(int index, String newValue) {
+    switch (index) {
+      case 0:
+        _selectedItem1 = newValue;
+        break;
+      case 1:
+        _selectedItem2 = newValue;
+        break;
+      case 2:
+        _selectedItem3 = newValue;
+        break;
+      default:
+    }
+  }
+
+  Widget _dropDownList(String hint, int index) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 24.0),
       child: FormField<String>(
         builder: (FormFieldState<String> state) {
           return InputDecorator(
             decoration: InputDecoration(
+                filled: true,
                 fillColor: SurfaceColors.white,
                 errorStyle: TextStyle(color: Colors.redAccent, fontSize: 16.0),
                 hintText: hint,
                 labelText: hint,
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(5.0))),
-            isEmpty: _selectedItem1 == '',
+            isEmpty: _chooseSelectedItem(index) == '',
             child: DropdownButtonHideUnderline(
               child: DropdownButton<String>(
-                value: _selectedItem1,
+                value: _chooseSelectedItem(index),
                 isDense: true,
                 onChanged: (String newValue) {
                   setState(() {
-                    _selectedItem1 = newValue;
+                    _changeSelectedItem(index, newValue);
                     state.didChange(newValue);
                   });
                 },

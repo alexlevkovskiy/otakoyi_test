@@ -24,5 +24,6 @@ flutter:
 
   assets:
     - images/holder.png
+    - images/house.png
 
   
